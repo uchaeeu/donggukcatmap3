@@ -1,6 +1,6 @@
-import FortuneGame from "./components/FortuneGame";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import FortuneGame from "./routes/FortuneGame";
 import './App.css';
-import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
@@ -16,8 +16,11 @@ function App() {
           position: "relative",
         }}
       >
-        <h1>동만고 🐾</h1>
-        <FortuneGame />
+        <Routes>
+          <Route path="/" element={<FortuneGame />} />
+          {/* 여기에 다른 팀원들의 페이지들을 추가할 수 있습니다 */}
+          {/* 예: <Route path="/other-page" element={<OtherPage />} /> */}
+        </Routes>
       </div>
     </BrowserRouter>
   );
