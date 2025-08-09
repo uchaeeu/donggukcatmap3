@@ -198,7 +198,7 @@ function Fortune() {
           {/* 고양이 선택 (그대로) */}
           {!showModal && !selectedCat && (
             <>
-              <h2 style={{ margin: "0 0 12px", fontSize: 22, fontWeight: "normal" }}>
+              <h2 style={{ margin: "0 0 12px", fontSize: 22, fontWeight: "normal", color: "#000" }}>
                 🐱 오늘의 고양이를 선택하세요! 🐱
               </h2>
               <div
