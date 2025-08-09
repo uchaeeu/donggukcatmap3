@@ -1,0 +1,67 @@
+.titleInput {
+    font-size: 1.5rem; /* <h2>와 비슷한 크기 */
+    font-weight: 700;
+    color: #333;
+    width: 100%;
+    
+    /* 배경 및 테두리 제거 */
+    background: transparent;
+    border: none;
+    outline: none; /* 포커스 시 나타나는 기본 외곽선 제거 */
+    
+    /* placeholder 스타일을 따로 설정 */
+    /* WebKit (Chrome, Safari) */
+    -webkit-input-placeholder {
+        color: #999;
+    }
+    /* Mozilla Firefox */
+    -moz-placeholder {
+        color: #999;
+    }
+    /* Internet Explorer */
+    -ms-input-placeholder {
+        color: #999;
+    }
+}
+
+.locationLink {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem; 
+  color: #3b82f6;
+  cursor: pointer;
+}
+
+.locationLink:hover {
+  text-decoration: underline;
+}
+
+.locationIcon {
+  height: 1.25rem; 
+  width: 1.25rem;
+}
+
+.commentTextarea {
+  width: 100%; 
+  padding: 0.75rem; 
+  height: 6rem; 
+  border-radius: 0.5rem; 
+  border: 1px solid #d1d5db; 
+  outline: none; 
+  resize: none; 
+  font-size: inherit;
+}
+
+.commentTextarea:focus {
+  border-color: #f97316; 
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.5); 
+}
+
+.tagSelectorLink {
+  color: #3b82f6; 
+  cursor: pointer;
+}
+
+.tagSelectorLink:hover {
+  text-decoration: underline; 
+}
