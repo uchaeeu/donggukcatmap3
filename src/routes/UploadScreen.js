@@ -27,7 +27,7 @@ function UploadScreen() {
     const [title, setTitle] = useState('');
     const [comment, setComment] = useState('');
 
-    const [tags, setTags] = useState(null);
+    const [tag, setTag] = useState(null);
 
     const fileInputRef = useRef(null);
 
@@ -88,16 +88,16 @@ function UploadScreen() {
 
         // FastAPI 서버로 POST 요청
         try {
-            const response = await fetch('http://localhost:3000/api/posts', {
+            const response = await fetch('http://localhost:8000/api/posts', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     image_url: imageUrl,
                     title,
-                    comment: comment,
+                    content: comment,
                     latitude,
                     longitude,
-                    tags: ""
+                    tag: tag || ""
                 }),
             });
 
@@ -114,16 +114,16 @@ function UploadScreen() {
     return (
         <div className={styles.pageContainer}>
             <div className={styles.cardContainer}>
-                <FormHeader/> 
+                <FormHeader/>
                 <FormUploadArea
                     imagePreview={imagePreview}
                     fileInputRef={fileInputRef}
                     handleFileChange={handleFileChange}
-                /> 
+                />
                 <div className={styles.formSections}>
                     <FormTitle
                         title={title}
-                        setTitle={setTitle}    
+                        setTitle={setTitle}
                     />
                     <FormLocationLink/>
                     <FormComment
@@ -133,7 +133,7 @@ function UploadScreen() {
                     <FormTagSelector/>
                 </div>
                 <FormUploadButton onUpload={handleUpload}/>
-            </div> 
+            </div>
         </div>
     );
 }

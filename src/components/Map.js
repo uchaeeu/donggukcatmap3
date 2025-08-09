@@ -50,7 +50,7 @@ const Map = ({ children, userLocation }) => {
         const imageSize = new window.kakao.maps.Size(52, 52);
         const markerImage = new window.kakao.maps.MarkerImage(catIcon, imageSize);
 
-        fetch("./mockData.json") // 마커 표시 test
+        /*fetch("./mockData.json") // 마커 표시 test
           .then(res => res.json())
           .then(data => {
             data.data.forEach(({ latitude, longitude, id }) => {
@@ -77,9 +77,9 @@ const Map = ({ children, userLocation }) => {
                 infowindow.close();
               });
             });
-          });
+          });*/
 
-        //fetchMarkers(map);
+        fetchMarkers(map);
       });
     };
 
@@ -92,7 +92,8 @@ const Map = ({ children, userLocation }) => {
     const markerImage = new window.kakao.maps.MarkerImage(catIcon, imageSize);
     try {
       const response = await axios.get('http://localhost:3000/api/map-posts');
-      const markers = response.data.data;
+      console.log('map posts: ', response.data.length, response.data);
+      const markers = Array.isArray(response.data) ? response.data : [];
 
       markers.forEach(({ latitude, longitude, id }) => {
         const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
@@ -102,7 +103,7 @@ const Map = ({ children, userLocation }) => {
         });
 
         marker.setMap(map);
-        const infowindow = new window.kakao.maps.infowindow({
+        const infowindow = new window.kakao.maps.InfoWindow({
           content: `<div>Post ID: ${id}</div>`,
         });
 
@@ -110,7 +111,7 @@ const Map = ({ children, userLocation }) => {
           navigate(`/posts/${id}`);
         });
 
-        window.kakao.maps.event.addListener(marker, 'click', () => {
+        window.kakao.maps.event.addListener(marker, 'mouseover', () => {
           infowindow.open(map, marker);
         });
 
