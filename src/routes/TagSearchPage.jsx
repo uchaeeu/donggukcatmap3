@@ -21,15 +21,13 @@ export default function TagSearchPage() {
     <div className={styles.pageContainer}>
       <div className={styles.cardContainer} style={{ paddingBottom: 90 }}>
         {/* 타이틀 */}
-        <div style={{ fontSize: 20, fontWeight: 700, color: '#2563eb', marginBottom: 6 }}>
+        <div style={{ fontSize: 20, fontWeight: 700, color: '#2563eb', marginBottom: 0 }}>
           동국대에서 만난 고양이
         </div>
 
         {/* 큰 제목 + 아이콘 */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h2 style={{ margin: 0, fontSize: 30, fontWeight: 800 }}>
-            어떤 고양이가 궁금하신가요
-          </h2>
+           <h2 style={{ fontSize: 30, fontWeight: 800, margin: 0 }}>어떤 고양이가 궁금하신가요?</h2>
           <svg width="36" height="36" viewBox="0 0 24 24" fill="#111" aria-hidden>
             <path d="M3 12c0-4.5 3.5-8 8-8 2.3 0 4.4 1 5.9 2.6l1.5-1.1c.4-.3.9.2.7.6l-.7 1.8c.7.9 1.1 2 1.1 3.1 0 4.5-3.5 8-8 8S3 16.5 3 12z" />
             <circle cx="10" cy="11" r="1.2" fill="#fff" />
