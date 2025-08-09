@@ -296,12 +296,12 @@ function Fortune() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.35, delay: 0.45 }}
                     >
-                      🔎 <strong>{selectedCat.name}</strong> 의 운세:
+                      🔎 <strong style={{color: "#000"}}>{selectedCat.name}</strong> 의 운세:
                     </motion.p>
 
                     {/* 운세 본문 */}
                     <motion.p
-                      style={{ fontSize: 20, lineHeight: 1.5, padding: "0 8px" }}
+                      style={{ fontSize: 20, lineHeight: 1.5, padding: "0 8px", color: "#000" }}
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.38, delay: 0.55 }}
@@ -321,4 +321,3 @@ function Fortune() {
 }
 
 export default Fortune;
-
