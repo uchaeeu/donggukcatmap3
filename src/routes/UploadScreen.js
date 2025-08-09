@@ -1,5 +1,6 @@
 import {useEffect, useState, useRef} from 'react';
 import { createClient } from '@supabase/supabase-js';
+import { useNavigate } from "react-router-dom";
 
 import styles from "../styles/Container.module.css";
 
@@ -16,6 +17,7 @@ const supabaseKey = process.env.REACT_APP_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 function UploadScreen() {
+    const navigate = useNavigate();
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
 
@@ -102,6 +104,7 @@ function UploadScreen() {
             const result = await response.json();
             console.log('✅ FastAPI 저장 성공:', result);
             alert('게시물 업로드 성공!');
+            navigate("/game");   
         } catch (err) {
             console.error('❌ FastAPI 전송 실패:', err);
             alert('서버 저장 실패!');

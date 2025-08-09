@@ -21,22 +21,26 @@
 }
 
 /* ===== 네 index.css 내용 + 공용 리셋 ===== */
-html, body {
+html, body, #root {
   height: 100%;
+  min-height: 100vh;
+}
+
+html, body {
   margin: 0;
   padding: 0;
   font-family: var(--font-stack);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh;
+  background-color: #fff3e6; /* 필요하면 유지 */
+  /* ✅ 여기서는 flex 관련 속성 전부 제거 */
+}
 
-  /* 네 index.css 배경 설정 */
-  background-color: #fff3e6; /* 앱 밖 영역 배경색 */
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* ⬇️ 이 블록을 html, body 블록 다음에 추가 */
+#root {
+  width: 100%;
+  display: block;
 }
 
 *, *::before, *::after {

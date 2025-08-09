@@ -2,16 +2,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 
-/**
- * 기대하는 응답 형태 (예시)
- * GET /api/posts
- * [
- *   { id: 1, title: "카페 무화과", lat: 37.4979, lng: 127.0276, thumbnail: "..." },
- *   { id: 2, title: "맛집 A", lat: 37.5, lng: 127.03 }
- * ]
- *
- * 필요에 맞게 아래 buildUrl() 이나 mapField() 수정해서 맞추면 됨.
- */
 
 const API_BASE = import.meta.env?.VITE_API_BASE || ""; // Vite면 .env에서 주입 가능
 
