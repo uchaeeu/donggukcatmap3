@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -44,251 +44,281 @@ const cats = [
       "🌷 아름다운 영감이 떠오를 거예요! 🌷",
       "🌱 새로운 성장의 계절이 시작될 거예요! 🌱"
     ]
-  },
+  }
 ];
+
+/* ✅ 추가: 스마트폰 프레임 고정 값 */
+const BASE_W = 375;
+const BASE_H = 812;
 
 function Fortune() {
   const navigate = useNavigate();
+
+  /* ✅ 추가: 데스크톱에서 폰 프레임 확대/축소 */
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const fit = () => {
+      const s = Math.min(window.innerWidth / BASE_W, window.innerHeight / BASE_H);
+      setScale(s);
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+
   const [showModal, setShowModal] = useState(true);
   const [selectedCat, setSelectedCat] = useState(null);
   const [selectedFortune, setSelectedFortune] = useState("");
   const [showFortune, setShowFortune] = useState(false);
 
-  const handleReveal = () => {
-    setShowModal(false);
-  };
+  const handleReveal = () => setShowModal(false);
 
   const handleClick = (cat) => {
     if (!selectedCat) {
-      // 랜덤으로 운세 선택
       const randomIndex = Math.floor(Math.random() * cat.fortunes.length);
       const randomFortune = cat.fortunes[randomIndex];
-      
       setSelectedCat(cat);
       setSelectedFortune(randomFortune);
-      
-      // 1초 후에 운세 텍스트 표시
-      setTimeout(() => {
-        setShowFortune(true);
-      }, 1000);
+      setTimeout(() => setShowFortune(true), 1000);
     }
   };
 
   return (
-    <div style={{ position: "relative", width: "100%" }}>
-      {/* 뒤로 가기 버튼 - 이미지 내부 왼쪽 상단에 배치 */}
+    /* ✅ stage: 브라우저 전체 (폰 프레임 중앙 배치) */
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#F8EEE4",
+        overflow: "hidden",
+      }}
+    >
+      {/* ✅ phone: 375×812 고정, scale로 확대/축소 */}
       <div
         style={{
-          position: "absolute",
-          top: "-60px",
-          left: "10px",
-          zIndex: 10000,
+          width: BASE_W,
+          height: BASE_H,
+          transform: `scale(${scale})`,
+          transformOrigin: "center center",
+          borderRadius: 28,
+          overflow: "hidden",
+          boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
+          position: "relative",
+          backgroundImage: `url(${process.env.PUBLIC_URL}/images/screen.png)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       >
-        <motion.img
-          src={process.env.PUBLIC_URL + "/images/back-button.png"}
-          alt="뒤로 가기"
-          style={{
-            width: "40px",
-            height: "40px",
-            cursor: "pointer",
-            filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
-            transition: "transform 0.2s ease",
-            backgroundColor: "rgba(255, 255, 255, 0.9)",
-            borderRadius: "8px",
-          }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            if (window.history.length > 1) {
-              navigate(-1);
-            } else {
-              navigate('/');
-            }
-          }}
-        />
-      </div>
-
-      {/* 모달 */}
-      {showModal && (
+        {}
         <div
           style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            position: "relative",
+            width: "100%",
+            height: "100%",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 999,
+            padding: "24px 16px",
+            boxSizing: "border-box",
           }}
         >
-          <div
-            style={{
-              backgroundColor: "#fff",
-              padding: "2rem",
-              borderRadius: "16px",
-              textAlign: "center",
-              width: "350px",
-              maxWidth: "90vw",
-            }}
-          >
-            <h2 style={{ fontSize: "1.8rem" }}>오늘 나의 운세는 어떨까?</h2>
-            <button
-              onClick={handleReveal}
+          {/* 뒤로 가기 버튼 */}
+          <div style={{ position: "absolute", top: 24, left: 24, zIndex: 10000 }}>
+            <motion.img
+              src={process.env.PUBLIC_URL + "/images/back-button.png"}
+              alt="뒤로 가기"
               style={{
-                marginTop: "1rem",
-                padding: "1rem 1.5rem",
-                backgroundColor: "#FFB366",
-                border: "none",
-                borderRadius: "8px",
-                color: "#fff",
-                fontWeight: "bold",
-                fontSize: "1.5rem",
+                width: 44,
+                height: 44,
                 cursor: "pointer",
-                whiteSpace: "nowrap",
+                filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
+                borderRadius: 10,
+              }}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                if (window.history.length > 1) navigate(-1);
+                else navigate("/");
+              }}
+            />
+          </div>
+
+          {/* 모달 (그대로) */}
+          {showModal && (
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                backgroundColor: "rgba(0, 0, 0, 0.6)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 10001,
               }}
             >
-              확인하러 가기
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* 고양이 선택 */}
-      {!showModal && !selectedCat && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "60vh",
-            paddingTop: "2rem",
-            position: "relative",
-          }}
-        >
-          <h2 style={{ marginBottom: "2.5rem", fontSize: "1.8rem", fontWeight: "normal" }}>
-            🐱 오늘의 고양이를 선택하세요! 🐱
-          </h2>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "1rem",
-            }}
-          >
-            {cats.map((cat, i) => (
-              <motion.div
-                key={i}
+              <div
                 style={{
-                  width: "200px",
-                  height: "200px",
-                  borderRadius: "12px",
-                  overflow: "hidden",
-                  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                  cursor: "pointer",
                   backgroundColor: "#fff",
-                  padding: "0.5rem",
+                  padding: "24px",
+                  borderRadius: "26px",
+                  textAlign: "center",
+                  width: 280,
+                  maxWidth: "100%",
                 }}
-                onClick={() => handleClick(cat)}
-                whileTap={{ scale: 1.2, rotate: 10 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                layoutId={selectedCat && selectedCat.name === cat.name ? "selectedCat" : undefined}
               >
-                <img
-                  src={cat.src}
-                  alt={cat.name}
+                <h2 style={{ fontSize: 20, margin: 10 }}>오늘 나의 운세는 어떨까?</h2>
+                <button
+                  onClick={handleReveal}
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
+                    marginTop: 10,
+                    padding: "14px 24px",
+                    backgroundColor: "#FFB366",
+                    border: "none",
+                    borderRadius: 15,
+                    color: "#fff",
+                    fontWeight: "bold",
+                    fontSize: 18,
+                    cursor: "pointer",
+                    width: "80%",
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                   }}
+                >
+                  확인하러 가기
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* 고양이 선택 (그대로) */}
+          {!showModal && !selectedCat && (
+            <>
+              <h2 style={{ margin: "0 0 12px", fontSize: 22, fontWeight: "normal" }}>
+                🐱 오늘의 고양이를 선택하세요! 🐱
+              </h2>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                {cats.map((cat, i) => (
+                  <motion.div
+                    key={i}
+                    style={{
+                      width: 200,
+                      height: 200,
+                      borderRadius: 15,
+                      overflow: "hidden",
+                      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                      cursor: "pointer",
+                      backgroundColor: "#fff",
+                      padding: 5,
+                    }}
+                    onClick={() => handleClick(cat)}
+                    whileTap={{ scale: 1.2, rotate: 10 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    layoutId={
+                      selectedCat && selectedCat.name === cat.name ? "selectedCat" : undefined
+                    }
+                  >
+                    <img
+                      src={cat.src}
+                      alt={cat.name}
+                      style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* 선택된 고양이 + 운세 (개선) */}
+          {selectedCat && (
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {/* 카드에서 확대 상태로 자연스럽게 변형되도록 layoutId는 컨테이너에 */}
+              <motion.div
+                layoutId="selectedCat"
+                transition={{ type: "spring", stiffness: 260, damping: 24, mass: 0.8 }}
+                style={{
+                  width: 260,
+                  height: 260,
+                  borderRadius: 20,
+                  background: "#fff",
+                  overflow: "hidden",
+                  boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: 32, // ✅ 이미지-텍스트 간격
+                  willChange: "transform",
+                }}
+              >
+                <motion.img
+                  src={selectedCat.src}
+                  alt={selectedCat.name}
+                  style={{ width: "88%", height: "88%", objectFit: "contain" }}
+                  initial={{ opacity: 0.85, scale: 0.98, y: 6 }}  // ✅ 튀지 않게 살짝만
+                  animate={{ opacity: 1, scale: 1.06, y: 0 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 24, mass: 0.8 }}
                 />
               </motion.div>
-            ))}
-          </div>
-        </div>
-      )}
 
-      {/* 선택된 고양이 크기조정 + 운세 */}
-      {selectedCat && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "60vh",
-            paddingTop: "6rem",
-            position: "relative",
-          }}
-        >
-          {/* 고양이 이미지 */}
-          <motion.img
-            src={selectedCat.src}
-            alt={selectedCat.name}
-            style={{ 
-              width: "250px", 
-              height: "250px", 
-              objectFit: "contain",
-              marginBottom: "4rem",
-            }}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ 
-              scale: 1.3,
-              opacity: 1,
-            }}
-            transition={{ 
-              duration: 1.2,
-              ease: "easeOut",
-            }}
-            layoutId="selectedCat"
-          />
+              <AnimatePresence>
+                {showFortune && (
+                  <motion.div
+                    style={{ textAlign: "center" }}
+                    initial={{ opacity: 0, y: 24, scale: 1.02 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.35, ease: "easeOut", delay: 0.35 }}
+                  >
+                    {/* 🔎 ~ 의 운세: */}
+                    <motion.p
+                      style={{ fontSize: 20, fontWeight: 400, marginBottom: 12 }}
+                      initial={{ opacity: 0, x: -14 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.35, delay: 0.45 }}
+                    >
+                      🔎 <strong>{selectedCat.name}</strong> 의 운세:
+                    </motion.p>
 
-          {/* 운세 텍스트 */}
-          <AnimatePresence>
-            {showFortune && (
-              <motion.div 
-                style={{ textAlign: "center" }}
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ 
-                  duration: 0.8,
-                  ease: "easeOut",
-                  delay: 0.5
-                }}
-              >
-                <motion.p 
-                  style={{ fontSize: "1.5rem", fontWeight: "normal", marginBottom: "1rem" }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7, duration: 0.5 }}
-                >
-                  🔎 <strong>{selectedCat.name}</strong>의 운세:
-                </motion.p>
-                <motion.p 
-                  style={{ fontSize: "1.5rem" }}
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ delay: 1.0, duration: 0.6 }}
-                  whileHover={{ 
-                    scale: 1.05,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  {selectedFortune}
-                </motion.p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                    {/* 운세 본문 */}
+                    <motion.p
+                      style={{ fontSize: 20, lineHeight: 1.5, padding: "0 8px" }}
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.38, delay: 0.55 }}
+                      whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                    >
+                      {selectedFortune}
+                    </motion.p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
 export default Fortune;
+
