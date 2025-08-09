@@ -42,7 +42,7 @@ export default function MapPage() {
       setLoading(true);
       setErr("");
       try {
-        const url = buildUrl("/api/posts", { limit: 50 }); // <- 엔드포인트 맞게 수정
+        const url = buildUrl("/api/posts/map");
         const res = await fetch(url, {
           headers: { "Content-Type": "application/json", ...authHeader },
           credentials: "include", // 쿠키 기반이면 유지, 아니면 지워도 됨

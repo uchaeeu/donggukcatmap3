@@ -53,7 +53,7 @@ export default function TagResultPage() {
       setLoading(true);
       setErr("");
       try {
-        const url = buildUrl("/api/posts", { tag, limit: 100 });
+        const url = buildUrl("/api/posts/by-tag", { tag, limit: 100 });
         const res = await fetch(url, {
           headers: { "Content-Type": "application/json", ...authHeader },
           credentials: "include",

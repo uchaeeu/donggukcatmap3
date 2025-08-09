@@ -1,5 +1,7 @@
+// src/App.js
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import Nav from "./components/Nav";
 
 // 너/팀원1
 import FortuneGame from "./routes/FortuneGame";
@@ -16,14 +18,13 @@ import MapPage from "./routes/MapPage";
 import TagSearchPage from "./routes/TagSearchPage";
 import TagResultPage from "./routes/TagResultPage";
 import TagPickPage from "./routes/TagPickPage";
-/*import BottomNav from "./components/BottomNav";*/
 
 export default function App() {
   return (
     <BrowserRouter>
       <div style={{ paddingBottom: 90 }}>
         <Routes>
-          {/* ✅ 홈을 업로드 화면으로 */}
+          {/* 홈 */}
           <Route path="/" element={<MainScreen />} />
 
           {/* 지도 */}
@@ -33,18 +34,19 @@ export default function App() {
           {/* 인기/그리드 */}
           <Route path="/popular" element={<PostGridPage mode="popular" />} />
 
-          {/* 태그 */}
+          {/* 태그 검색/결과/선택 */}
           <Route path="/tags" element={<TagSearchPage />} />
           <Route path="/tags/search" element={<TagSearchPage />} />
           <Route path="/tags/:name" element={<TagResultPage />} />
+          <Route path="/tags/pick" element={<TagPickPage />} />   {/* 태그 선택 페이지 */}
+          <Route path="/upload/tags" element={<TagPickPage />} /> {/* 호환용 경로(선택) */}
 
           {/* 상세 */}
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/posts/:postId" element={<PostDetailPage />} />
 
-          {/* 업로드 별칭(원래 경로도 살려두고 싶으면 유지) */}
+          {/* 업로드 */}
           <Route path="/posts" element={<UploadScreen />} />
-          <Route path="/upload/tags" element={<TagPickPage />} />
 
           {/* 게임 */}
           <Route path="/game" element={<FortuneGame />} />
@@ -53,7 +55,7 @@ export default function App() {
           <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
 
-        
+        <Nav />
       </div>
     </BrowserRouter>
   );
