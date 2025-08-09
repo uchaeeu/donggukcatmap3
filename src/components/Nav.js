@@ -1,6 +1,7 @@
-import {useState} from 'react';
+// src/components/Nav.js
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import navSytle from "../styles/Nav.module.css";
-import { useNavigate } from 'react-router-dom';
 
 import HomeInactive from '../img/Home.svg';
 import HomeActive from '../img/HomeActive.svg';
@@ -9,32 +10,32 @@ import SearchActive from '../img/SearchActive.svg';
 import HeartInactive from '../img/Heart.svg';
 import HeartActive from '../img/HeartActive.svg';
 
-// 하단 네비게이션 바를 컨트롤합니다.
 function Nav() {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState(''); // 기본 활성화 탭은 '/', 즉, 홈 (메인 화면)
+    const location = useLocation();
+    const [activeTab, setActiveTab] = useState('');
 
-    // 네비게이션 바에서 버튼을 선택하면 그 페이지로 옮겨주자.
-    const handleNavClick = (tabName) => {
-        setActiveTab(tabName);
-        navigate(`/${tabName}`);
-    };
+    // 현재 경로에 따라 activeTab 자동 설정
+    useEffect(() => {
+        if (location.pathname === '/' || location.pathname.startsWith('/map')) {
+            setActiveTab('');
+        } else if (location.pathname.startsWith('/tags')) {
+            setActiveTab('tags');
+        } else if (location.pathname.startsWith('/popular')) {
+            setActiveTab('popular');
+        }
+    }, [location.pathname]);
 
     return (
         <div className={navSytle.navContainer}>
-            <button className={navSytle.navButton}
-                onClick={() => handleNavClick('')}
-            >
+            <button className={navSytle.navButton} onClick={() => navigate('/')}>
                 <img src={activeTab === '' ? HomeActive : HomeInactive} alt='홈'/>
             </button>
-            <button className={navSytle.navButton}
-                onClick={() => handleNavClick('tags')}>
+            <button className={navSytle.navButton} onClick={() => navigate('/tags')}>
                 <img src={activeTab === 'tags' ? SearchActive : SearchInactive} alt='태그'/>
             </button>
-            <button className={navSytle.navButton}
-                onClick={() => handleNavClick('trend')}
-            >
-                <img src={activeTab === 'trend' ? HeartActive : HeartInactive} alt='인기'/>
+            <button className={navSytle.navButton} onClick={() => navigate('/popular')}>
+                <img src={activeTab === 'popular' ? HeartActive : HeartInactive} alt='인기'/>
             </button>
         </div>
     );

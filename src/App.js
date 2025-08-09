@@ -16,7 +16,7 @@ import MapPage from "./routes/MapPage";
 import TagSearchPage from "./routes/TagSearchPage";
 import TagResultPage from "./routes/TagResultPage";
 import TagPickPage from "./routes/TagPickPage";
-import BottomNav from "./components/BottomNav";
+/*import BottomNav from "./components/BottomNav";*/
 
 export default function App() {
   return (
@@ -34,7 +34,7 @@ export default function App() {
           <Route path="/popular" element={<PostGridPage mode="popular" />} />
 
           {/* 태그 */}
-          <Route path="/tags" element={<SearchScreen />} />
+          <Route path="/tags" element={<TagSearchPage />} />
           <Route path="/tags/search" element={<TagSearchPage />} />
           <Route path="/tags/:name" element={<TagResultPage />} />
 
@@ -53,7 +53,7 @@ export default function App() {
           <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
 
-        <BottomNav />
+        
       </div>
     </BrowserRouter>
   );
