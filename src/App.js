@@ -31,7 +31,7 @@ export default function App() {
           {/* 홈 경로 — 팀원2 설계 존중: / → /map 리다이렉트 
               (네 메인 화면을 기본으로 쓰고 싶으면 아래 두 줄을 바꾸면 돼)
           */}
-          <Route path="/" element={<Navigate to="/map" replace />} />
+          {/*<Route path="/" element={<Navigate to="/map" replace />} />*/}
           {/* <Route path="/" element={<MainScreen />} /> */}
 
           {/* 지도 */}
