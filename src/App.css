@@ -1,19 +1,6 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Pretendard', sans-serif;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-}
-
 .page {
   width: 100%;
   min-height: 100vh;
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,14 +9,12 @@ html, body {
 
 .App {
   width: 500px;
-  min-height: 100%;
   margin: 40px auto;
+  padding: 24px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  padding: 24px;
   box-sizing: border-box;
   background-color: transparent;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -37,27 +22,15 @@ html, body {
   overflow: visible;
 }
 
-/* 그라데이션 애니메이션 */
 @keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* 애니메이션도 안 쓰면 삭제해도 됨 */
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .App-header {
@@ -74,3 +47,4 @@ html, body {
 .App-link {
   color: #61dafb;
 }
+
