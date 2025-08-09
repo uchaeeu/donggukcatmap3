@@ -91,7 +91,7 @@ const Map = ({ children, userLocation }) => {
     const imageSize = new window.kakao.maps.Size(40, 40);
     const markerImage = new window.kakao.maps.MarkerImage(catIcon, imageSize);
     try {
-      const response = await axios.get('http://localhost:3000/api/map-posts');
+      const response = await axios.get('http://localhost:3000/api/posts/map');
       console.log('map posts: ', response.data.length, response.data);
       const markers = Array.isArray(response.data) ? response.data : [];
 
